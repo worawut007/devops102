@@ -52,19 +52,19 @@ services:
     expose: 
       - "80"
 
-  cert:
-    container_name: lemp-cert
-    image: neilpang/acme.sh:latest
-    restart: always
-    volumes:
-      - ./proxy-config/cert:/etc/nginx/conf.d/cert
-    command: >
-      bash -c  "
-          acme.sh --install-cert -d jameslnwza.com -d mydb.jameslnwza.com -d www.jameslnwza.com \
-      --key-file       /etc/nginx/conf.d/cert/ssl.jameslnwza-cert.key  \
-      --fullchain-file /etc/nginx/conf.d/cert/ssl.jameslnwza-cert.pem \
-      --reloadcmd     'service nginx force-reload'
-      "
+  # cert:
+  #   container_name: lemp-cert
+  #   image: neilpang/acme.sh:latest
+  #   restart: always
+  #   volumes:
+  #     - ./proxy-config/cert:/etc/nginx/conf.d/cert
+  #   command: >
+  #     bash -c  "
+  #         acme.sh --install-cert -d jameslnwza.com -d mydb.jameslnwza.com -d www.jameslnwza.com \
+  #     --key-file       /etc/nginx/conf.d/cert/ssl.jameslnwza-cert.key  \
+  #     --fullchain-file /etc/nginx/conf.d/cert/ssl.jameslnwza-cert.pem \
+  #     --reloadcmd     'service nginx force-reload'
+  #     "
 
   proxy:
     container_name: lemp-proxy
