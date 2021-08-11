@@ -2,7 +2,7 @@ version: '2'
 services:
   php:
     container_name: lemp_php
-    build: php/
+    build: ./website/php/
     restart: unless-stopped
     volumes:
       - ./website/html/:/var/www/html
