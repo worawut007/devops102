@@ -84,10 +84,9 @@ services:
     restart: always
     volumes: 
       # - ./proxy-config:/etc/nginx/conf.d
+      - certs:/etc/nginx/certs:ro
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
-      - certs:/etc/nginx/certs:ro
-      - dhparam:/etc/nginx/dhparam
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
     ports: 
@@ -96,7 +95,6 @@ services:
       - "443:443"
 
 volumes:
+  certs:
   vhost:
   html:
-  certs:
-  dhparam:
