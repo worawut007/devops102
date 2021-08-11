@@ -65,14 +65,16 @@ services:
   #     --fullchain-file /etc/nginx/conf.d/cert/ssl.jameslnwza-cert.pem \
   #     --reloadcmd     'service nginx force-reload'
   #     "
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: lemp-cert
-    volumes: 
-      - ./proxy-config:/etc/nginx/certs:rw
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    depends_on: 
-      - nginx
+
+
+  # letsencrypt:
+  #   image: jrcs/letsencrypt-nginx-proxy-companion
+  #   container_name: lemp-cert
+  #   volumes: 
+  #     - ./proxy-config:/etc/nginx/certs:rw
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #   depends_on: 
+  #     - nginx
 
   proxy:
     container_name: lemp-proxy
@@ -80,6 +82,7 @@ services:
     restart: always
     volumes: 
       - ./proxy-config:/etc/nginx/conf.d
+
     ports: 
       # - host:container
       - "80:80"
