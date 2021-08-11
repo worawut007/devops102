@@ -67,14 +67,14 @@ services:
   #     "
 
 
-  # letsencrypt:
-  #   image: jrcs/letsencrypt-nginx-proxy-companion
-  #   container_name: lemp-cert
-  #   volumes: 
-  #     - ./proxy-config:/etc/nginx/certs:rw
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #   depends_on: 
-  #     - nginx
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: lemp-cert
+    volumes: 
+      - ./proxy-config/certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on: 
+      - nginx
 
   proxy:
     container_name: lemp-proxy
