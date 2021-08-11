@@ -86,7 +86,7 @@ services:
       - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
-  proxy:
+  nginx-proxy:
     container_name: lemp-proxy
     image:  nginx:stable-alpine
     restart: always
