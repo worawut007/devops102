@@ -5,7 +5,7 @@ services:
     build: php/
     restart: unless-stopped
     volumes:
-      - ./html/:/var/www/html
+      - ./website/html/:/var/www/html
     expose:
       - "9000"
     depends_on:
@@ -21,9 +21,9 @@ services:
       LETSENCRYPT_HOST: www.jameslnwza.com
 
     volumes:
-      - ./html/:/var/www/html
-      - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf:ro
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./website/html/:/var/www/html
+      - ./website/nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf:ro
+      - ./website/nginx/conf.d:/etc/nginx/conf.d:ro
     expose: 
       - "80"
 
@@ -32,8 +32,8 @@ services:
     image: mariadb:latest
     restart: unless-stopped
     volumes:
-      - ./mariadb/initdb/:/docker-entrypoint-initdb.d
-      - ./mariadb/data/:/var/lib/mysql/
+      - ./website/mariadb/initdb/:/docker-entrypoint-initdb.d
+      - ./website/mariadb/data/:/var/lib/mysql/
 
     environment:
       - MYSQL_ROOT_PASSWORD=devops101
@@ -57,12 +57,12 @@ services:
     image: neilpang/acme.sh:latest
     restart: always
     volumes:
-      - ./certs:/certs
+      - ./proxy-config/cert:/etc/nginx/conf.d/cert
     command: >
       bash -c  "
           acme.sh --install-cert -d jameslnwza.com -d mydb.jameslnwza.com -d www.jameslnwza.com \
-      --key-file       /etc/nginx/conf.d/customer/ssl.jameslnwza-cert.key  \
-      --fullchain-file /etc/nginx/conf.d/customer/ssl.jameslnwza-cert.pem \
+      --key-file       /etc/nginx/conf.d/cert/ssl.jameslnwza-cert.key  \
+      --fullchain-file /etc/nginx/conf.d/cert/ssl.jameslnwza-cert.pem \
       --reloadcmd     'service nginx force-reload'
       "
 
