@@ -67,45 +67,36 @@ services:
   #     "
 
 
-  # letsencrypt:
-  #   image: jrcs/letsencrypt-nginx-proxy-companion
-  #   container_name: lemp-cert
-  #   volumes: 
-  #     - ./proxy-config:/etc/nginx/certs:rw
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #   depends_on: 
-  #     - nginx
-
-  acme-companion:
-    image: nginxproxy/acme-companion
-    container_name: nginx-proxy-acme
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-proxy-lets
     volumes_from:
       - nginx-proxy
     volumes:
       - certs:/etc/nginx/certs:rw
-      - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - nginx-proxy
 
   nginx-proxy:
     container_name: lemp-proxy
-    image:  nginx:stable-alpine
+    image:  jwilder/nginx-proxy:alpine
     restart: always
     volumes: 
-      - ./proxy-config:/etc/nginx/conf.d
+      # - ./proxy-config:/etc/nginx/conf.d
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
-      - dhparam:/etc/nginx/dhparam
       - certs:/etc/nginx/certs:ro
+      - dhparam:/etc/nginx/dhparam
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
     ports: 
       # - host:container
       - "80:80"
       - "443:443"
+
 volumes:
-  conf:
   vhost:
   html:
-  dhparam:
   certs:
-  acme:
+  dhparam:
