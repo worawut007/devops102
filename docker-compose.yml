@@ -72,7 +72,7 @@ services:
       - ./proxy-config:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on: 
-      - lemp_nginx
+      - nginx
 
   proxy:
     container_name: lemp-proxy
